@@ -541,6 +541,7 @@ class BarChartPainter extends AxisChartPainter<BarChartData> {
     final drawTooltipOnTop = tooltipData.direction == TooltipDirection.top ||
         (tooltipData.direction == TooltipDirection.auto &&
             showOnRodData.isUpward());
+    final drawTooltipOverChart = tooltipData.direction == TooltipDirection.over;
 
     final tooltipOriginPoint = Offset(
       barX,
@@ -552,9 +553,11 @@ class BarChartPainter extends AxisChartPainter<BarChartData> {
       return;
     }
 
-    final tooltipTop = drawTooltipOnTop
-        ? barTopY - tooltipHeight - tooltipData.tooltipMargin
-        : barBottomY + tooltipData.tooltipMargin;
+    final tooltipTop = drawTooltipOverChart
+        ? 0 - tooltipHeight - tooltipData.tooltipMargin
+        : drawTooltipOnTop
+            ? barTopY - tooltipHeight - tooltipData.tooltipMargin
+            : barBottomY + tooltipData.tooltipMargin;
 
     final tooltipLeft = getTooltipLeft(
       barToYPixel.dx,
@@ -594,7 +597,7 @@ class BarChartPainter extends AxisChartPainter<BarChartData> {
       }
     }
 
-    if (tooltipData.fitInsideVertically) {
+    if (tooltipData.fitInsideVertically && !drawTooltipOverChart) {
       if (rect.top < 0) {
         final shiftAmount = 0 - rect.top;
         rect = Rect.fromLTRB(
