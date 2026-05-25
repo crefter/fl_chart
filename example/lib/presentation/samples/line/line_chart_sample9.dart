@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 class LineChartSample9 extends StatelessWidget {
   LineChartSample9({super.key});
 
-  final spots = List.generate(101, (i) => (i - 50) / 10)
-      .map((x) => FlSpot(x, cos(x)))
+  final spots = List.generate(210, (i) => (i - 50) / 10)
+      .map((x) => FlSpot(x, cos(x / 2) + 2))
       .toList();
 
   Widget bottomTitleWidgets(double value, TitleMeta meta, double chartWidth) {
@@ -43,6 +43,9 @@ class LineChartSample9 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final spot1 = spots.sublist(0, 70);
+    final spot2 = spots.sublist(70, 140);
+    final spot3 = spots.sublist(140);
     return Padding(
       padding: const EdgeInsets.only(
         left: 12,
@@ -57,9 +60,10 @@ class LineChartSample9 extends StatelessWidget {
             return LineChart(
               LineChartData(
                 lineTouchData: LineTouchData(
+                  showLineTouch: ShowLineTouch.single,
                   touchTooltipData: LineTouchTooltipData(
                     maxContentWidth: 100,
-                    getTooltipColor: (touchedSpot) => Colors.black,
+                    getTooltipColor: (touchedSpot) => Colors.white,
                     getTooltipItems: (touchedSpots) {
                       return touchedSpots.map((LineBarSpot touchedSpot) {
                         final textStyle = TextStyle(
@@ -81,7 +85,29 @@ class LineChartSample9 extends StatelessWidget {
                 lineBarsData: [
                   LineChartBarData(
                     color: AppColors.contentColorPink,
-                    spots: spots,
+                    spots: spot1,
+                    isCurved: true,
+                    isStrokeCapRound: true,
+                    barWidth: 3,
+                    belowBarData: BarAreaData(
+                      show: false,
+                    ),
+                    dotData: const FlDotData(show: false),
+                  ),
+                  LineChartBarData(
+                    color: AppColors.contentColorPink,
+                    spots: spot2,
+                    isCurved: true,
+                    isStrokeCapRound: true,
+                    barWidth: 3,
+                    belowBarData: BarAreaData(
+                      show: false,
+                    ),
+                    dotData: const FlDotData(show: false),
+                  ),
+                  LineChartBarData(
+                    color: AppColors.contentColorPink,
+                    spots: spot3,
                     isCurved: true,
                     isStrokeCapRound: true,
                     barWidth: 3,
@@ -91,8 +117,8 @@ class LineChartSample9 extends StatelessWidget {
                     dotData: const FlDotData(show: false),
                   ),
                 ],
-                minY: -1.5,
-                maxY: 1.5,
+                minY: 0.5,
+                maxY: 3.5,
                 titlesData: FlTitlesData(
                   leftTitles: AxisTitles(
                     sideTitles: SideTitles(
