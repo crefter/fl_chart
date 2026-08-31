@@ -877,6 +877,11 @@ abstract class FlLineLabel with EquatableMixin {
       ];
 }
 
+enum ShowLineTouch {
+  all,
+  single;
+}
+
 /// Holds data to handle touch events, and touch responses in the [LineChart].
 ///
 /// There is a touch flow, explained [here](https://github.com/imaNNeo/fl_chart/blob/main/repo_files/documentations/handle_touches.md)
@@ -912,6 +917,7 @@ class LineTouchData extends FlTouchData<LineTouchResponse> with EquatableMixin {
     this.handleBuiltInTouches = true,
     this.getTouchLineStart = defaultGetTouchLineStart,
     this.getTouchLineEnd = defaultGetTouchLineEnd,
+    this.showLineTouch = ShowLineTouch.all,
   }) : super(
           enabled,
           touchCallback,
@@ -943,21 +949,26 @@ class LineTouchData extends FlTouchData<LineTouchResponse> with EquatableMixin {
   /// If line end is overlap with the dot, it will be automatically adjusted to the edge of the dot.
   final GetTouchLineY getTouchLineEnd;
 
+  /// How much touch line show if it has several line bars data.
+  /// [ShowLineTouch.all] - show all lines
+  /// [ShowLineTouch.single - show single line (nearest to touch)
+  final ShowLineTouch showLineTouch;
+
   /// Copies current [LineTouchData] to a new [LineTouchData],
   /// and replaces provided values.
-  LineTouchData copyWith({
-    bool? enabled,
-    BaseTouchCallback<LineTouchResponse>? touchCallback,
-    MouseCursorResolver<LineTouchResponse>? mouseCursorResolver,
-    Duration? longPressDuration,
-    LineTouchTooltipData? touchTooltipData,
-    GetTouchedSpotIndicator? getTouchedSpotIndicator,
-    double? touchSpotThreshold,
-    CalculateTouchDistance? distanceCalculator,
-    GetTouchLineY? getTouchLineStart,
-    GetTouchLineY? getTouchLineEnd,
-    bool? handleBuiltInTouches,
-  }) =>
+  LineTouchData copyWith(
+          {bool? enabled,
+          BaseTouchCallback<LineTouchResponse>? touchCallback,
+          MouseCursorResolver<LineTouchResponse>? mouseCursorResolver,
+          Duration? longPressDuration,
+          LineTouchTooltipData? touchTooltipData,
+          GetTouchedSpotIndicator? getTouchedSpotIndicator,
+          double? touchSpotThreshold,
+          CalculateTouchDistance? distanceCalculator,
+          GetTouchLineY? getTouchLineStart,
+          GetTouchLineY? getTouchLineEnd,
+          bool? handleBuiltInTouches,
+          ShowLineTouch? showLineTouch}) =>
       LineTouchData(
         enabled: enabled ?? this.enabled,
         touchCallback: touchCallback ?? this.touchCallback,
@@ -971,6 +982,7 @@ class LineTouchData extends FlTouchData<LineTouchResponse> with EquatableMixin {
         getTouchLineStart: getTouchLineStart ?? this.getTouchLineStart,
         getTouchLineEnd: getTouchLineEnd ?? this.getTouchLineEnd,
         handleBuiltInTouches: handleBuiltInTouches ?? this.handleBuiltInTouches,
+        showLineTouch: showLineTouch ?? this.showLineTouch,
       );
 
   /// Used for equality check, see [EquatableMixin].
@@ -987,6 +999,7 @@ class LineTouchData extends FlTouchData<LineTouchResponse> with EquatableMixin {
         handleBuiltInTouches,
         getTouchLineStart,
         getTouchLineEnd,
+        showLineTouch,
       ];
 }
 

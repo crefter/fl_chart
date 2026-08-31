@@ -6,8 +6,8 @@ import 'package:fl_chart_app/presentation/resources/app_resources.dart';
 import 'package:fl_chart_app/util/extensions/color_extensions.dart';
 import 'package:flutter/material.dart';
 
-class BarChartSample1 extends StatefulWidget {
-  BarChartSample1({super.key});
+class BarChartSample9 extends StatefulWidget {
+  BarChartSample9({super.key});
 
   List<Color> get availableColors => const <Color>[
         AppColors.contentColorPurple,
@@ -24,10 +24,10 @@ class BarChartSample1 extends StatefulWidget {
   final Color touchedBarColor = AppColors.contentColorGreen;
 
   @override
-  State<StatefulWidget> createState() => BarChartSample1State();
+  State<StatefulWidget> createState() => BarChartSample9State();
 }
 
-class BarChartSample1State extends State<BarChartSample1> {
+class BarChartSample9State extends State<BarChartSample9> {
   final Duration animDuration = const Duration(milliseconds: 250);
 
   int touchedIndex = -1;
@@ -156,8 +156,8 @@ class BarChartSample1State extends State<BarChartSample1> {
         enabled: true,
         touchTooltipData: BarTouchTooltipData(
           getTooltipColor: (_) => Colors.blueGrey,
-          tooltipHorizontalAlignment: FLHorizontalAlignment.right,
-          tooltipMargin: -10,
+          direction: TooltipDirection.over,
+          tooltipMargin: 5,
           getTooltipItem: (group, groupIndex, rod, rodIndex) {
             String weekDay = switch (group.x) {
               0 => 'Monday',
