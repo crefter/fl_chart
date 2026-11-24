@@ -734,6 +734,9 @@ enum TooltipDirection {
 
   /// Tooltip always shows on bottom.
   bottom,
+
+  /// Tooltip always shows over on chart
+  over,
 }
 
 /// Holds representation data for showing tooltip popup on top of rods.

@@ -1336,6 +1336,8 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
     PaintHolder<LineChartData> holder,
   ) {
     final data = holder.data;
+    final showTouchLine = data.lineTouchData.showLineTouch;
+
     final viewSize = holder.getChartUsableSize(size);
 
     final isZoomed = holder.chartVirtualRect != null;
@@ -1365,9 +1367,16 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
       }
     }
 
+    if (touchedSpots.isEmpty) return null;
+
     touchedSpots.sort((a, b) => a.distance.compareTo(b.distance));
 
-    return touchedSpots.isEmpty ? null : touchedSpots;
+    final shownSpots = switch (showTouchLine) {
+      ShowLineTouch.all => touchedSpots,
+      ShowLineTouch.single => [touchedSpots.first],
+    };
+
+    return shownSpots;
   }
 
   /// find the nearest spot base on the touched offset
