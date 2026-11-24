@@ -7,5 +7,5 @@
   "editor.wordBasedSuggestions": "off",
   "files.insertFinalNewline": true,
   "editor.defaultFormatter": "Dart-Code.dart-code",
-  "dart.flutterSdkPath": ".fvm/versions/3.41.9"
+  "dart.flutterSdkPath": ".fvm/versions/3.44.9"
 }

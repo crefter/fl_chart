@@ -859,7 +859,14 @@ class BarChartPainter extends AxisChartPainter<BarChartData> {
       final groupBarPos = _groupBarsPosition![i];
       for (var j = 0; j < groupBarPos.barsX.length; j++) {
         final barX = groupBarPos.barsX[j];
-        final barWidth = targetData.barGroups[i].barRods[j].width;
+        final barWidth = targetData.barGroups
+            .elementAtOrNull(i)
+            ?.barRods
+            .elementAtOrNull(j)
+            ?.width;
+        if (barWidth == null) {
+          continue;
+        }
         final halfBarWidth = barWidth / 2;
 
         double barTopY;
